@@ -1,0 +1,40 @@
+### 取得所有學生資料 API
+GET http://localhost:8080/api/students
+
+### 新增學生資料 API
+POST http://localhost:8080/api/students
+Content-Type: application/json
+
+{
+  "name": "ADASD",
+  "email": "test@gmail.com"
+}
+
+### 利用姓名參數查詢學生資料
+POST http://localhost:8080/api/students/search?name=Devin
+Content-Type: application/json
+
+### 修改學生資料
+PUT http://localhost:8080/api/students/41
+Content-Type: application/json
+
+{
+ "name": "ADASD",
+ "email": "Eric@gmail.com"
+}
+
+### 修改學生信箱資料
+PATCH http://localhost:8080/api/students/39
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com"
+}
+
+### 刪除學生資料
+DELETE http://localhost:8080/api/students/41
+
+###
+
+
+
