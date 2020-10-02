@@ -46,7 +46,8 @@ class StudentControllerImpl(@Autowired val studentService: StudentService) : Stu
             .run {
                 this ?: return ResponseEntity<Student?>(null, HttpStatus.NOT_FOUND)
             }.run {
-                return ResponseEntity<Student?>(studentService.updateStudent(this), HttpStatus.OK)
+                val newStudent = studentService.updateStudent(this)
+                return ResponseEntity<Student?>(newStudent, HttpStatus.OK)
             }
 
     /**
@@ -76,8 +77,8 @@ class StudentControllerImpl(@Autowired val studentService: StudentService) : Stu
             = studentService
             .deleteStudent(id)
             .run {
-                if (this) {
-                    return ResponseEntity<Any>(null, HttpStatus.NOT_FOUND)
+                if (!this) {
+                    return ResponseEntity<Any>(null, HttpStatus.BAD_REQUEST)
                 }
                 return ResponseEntity<Any>(null, HttpStatus.NO_CONTENT)
             }

@@ -3,6 +3,7 @@ package com.ironman.demo.service
 import com.ironman.demo.data.dao.StudentDao
 import com.ironman.demo.data.entity.Student
 import com.ironman.demo.service.Impl.StudentServiceImpl
+import org.hibernate.service.spi.ServiceException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
@@ -12,6 +13,7 @@ import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import kotlin.math.exp
 
 /**
  *
@@ -102,6 +104,18 @@ class TestStudentService {
         val expectedResult = true
         val expectedSaveResult = Student(1, "Devin", "devin@gmail.com")
         given(studentDao.findById(1)).willReturn(expectedSaveResult)
+
+        val actual = studentServiceImpl.deleteStudent(1)
+
+        assertEquals(expectedResult, actual)
+    }
+
+    @Test
+    fun shouldGetFalseWhenDeleteFailed() {
+        val expectedResult = false
+        val expectedSaveResult = Student(1, "Devin", "devin@gmail.com")
+        given(studentDao.findById(1)).willReturn(expectedSaveResult)
+        given(studentDao.delete(expectedSaveResult)).willAnswer { throw ServiceException("Delete Failed") }
 
         val actual = studentServiceImpl.deleteStudent(1)
 
